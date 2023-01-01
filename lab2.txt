@@ -1,0 +1,85 @@
+1. 
+WAP to perform division of two 8-bit numbers.
+Input: (2034H) = Dividend
+(2035H) = Divisor
+Output: (2036H) = Remainder
+(2037H) = Quotient
+Test Case1 : I/P : (2034H) = 0FH (2035H) = 02H
+O/P (2036H) = 01H (2037H) = 07H
+Test Case2 : I/P : (2034H) = 08H (2035H) = 02H
+O/P : (2037H) = 04H
+
+CODE: 
+
+LXI H,2034H
+MOV A,M
+INX H
+MOV B,M
+MVI C,00H
+LOOP:
+    CMP B
+    JC SAVE
+    SUB B
+    INR C
+    JMP LOOP
+
+SAVE:
+    INX H
+    MOV M,A
+    INX H
+    MOV M,C
+    HLT
+
+#ORG 2034H
+#DB 0FH,02H
+
+
+2. 
+WAP to Count the number of 1’s in the content of the D Register and store
+the count in the B Register.
+Constraint: Data is at memory location 40A2 H
+Test Case : Input: (40A2H) = 16H
+Output: B = 03H
+Code: 
+
+    LXI H,40A2
+    MOV D,M
+    MVI B,00
+    MOV A,D
+    MVI C,08
+
+LOOP:    
+    RLC
+    JNC NEXT
+    INR B
+
+NEXT:    
+    DCR C
+    JNZ LOOP
+   
+HLT
+# ORG 40A2H
+# DB 16H
+
+
+3. 
+WAP to find 1’s complement and 2’s complement of a number.
+Input: (2034H) = 23H
+Output: (2035H) = DCH
+(2036H) = DDH
+CODE: 
+
+
+LXI H,2034
+MOV A,M
+CMA
+INX H
+MOV M,A
+ADI 01
+INX H
+MOV M,A
+HLT
+
+#ORG 2034H
+#DB 23H,DCH,DDH
+
